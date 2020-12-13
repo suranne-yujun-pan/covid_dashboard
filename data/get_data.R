@@ -42,3 +42,22 @@ write.csv(spdata, "spdata.csv", row.names = FALSE)
 #   arrange(desc(positive)) %>% 
 #   slice(1:50) %>% 
 #   select(Country.Region) %>% pull()
+
+# x <- read.csv("https://raw.githubusercontent.com/suranne-yujun-pan/covid_dashboard/master/data/countries_ts_c.csv",
+#               stringsAsFactors=FALSE) #%>% View()
+# x$Date <- x$Date %>% as.character() %>% as.Date()
+# 
+# x <- x %>% 
+#   filter(positive_diff >= 0)
+# 
+# df <- read.csv("https://raw.githubusercontent.com/suranne-yujun-pan/covid_dashboard/master/data/countries_ts.csv",
+#                stringsAsFactors=FALSE)
+# df$Date <- df$Date %>% as.character() %>% as.Date()
+# 
+# names(df)[3] <- "cases"
+# df$cases <- ifelse(df$cases == "currently_positive", 
+#                    "currently positive", df$cases)
+# 
+# spdata <- read.csv("https://raw.githubusercontent.com/suranne-yujun-pan/covid_dashboard/master/data/spdata.csv")
+# 
+# spdata$Date <- spdata$Date %>% as.character() %>% as.Date()
