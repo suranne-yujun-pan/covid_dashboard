@@ -4,6 +4,20 @@
 source("~/Documents/Crona/Country_Charts/get_country_data.R")
 source("~/Documents/Portfolio/learning/covid_dashboard/source code/scatter_plot/get_population_data.R")
 
+x <- countries_ts_c
+
+x <- x %>% 
+  arrange(Country.Region, Date)
+
+list <- split(x, x$Country.Region)
+
+list <- lapply(list, function(x) x %>% 
+                 mutate(roll_avg = rollmean(positive_diff, k = 7, fill = NA)))
+
+x <- do.call("rbind", list)
+
+x <- countries_ts_c
+
 setwd("/Users/panyujun/Documents/Portfolio/covid_dashboard/data")
 
 write.csv(countries_ts, "countries_ts.csv", row.names = FALSE)
