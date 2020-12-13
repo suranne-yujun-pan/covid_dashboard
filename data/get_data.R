@@ -16,7 +16,7 @@ list <- lapply(list, function(x) x %>%
 
 x <- do.call("rbind", list)
 
-x <- countries_ts_c
+countries_ts_c <- x
 
 setwd("/Users/panyujun/Documents/Portfolio/covid_dashboard/data")
 
