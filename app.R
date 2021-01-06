@@ -1,5 +1,8 @@
 library(shiny)
 library(tidyverse)
+library(ggplot2)
+library(ggrepel)
+
 
 x <- read.csv("https://raw.githubusercontent.com/suranne-yujun-pan/covid_dashboard/master/data/countries_ts_c.csv",
               stringsAsFactors=FALSE) #%>% View()
