@@ -2,6 +2,7 @@ library(shiny)
 library(tidyverse)
 library(ggplot2)
 library(ggrepel)
+library(zoo)
 
 
 x <- read.csv("https://raw.githubusercontent.com/suranne-yujun-pan/covid_dashboard/master/data/countries_ts_c.csv",
@@ -10,6 +11,19 @@ x$Date <- x$Date %>% as.character() %>% as.Date()
 
 x <- x %>% 
   filter(positive_diff >= 0)
+
+x <- x %>% 
+  arrange(Country.Region, Date)
+
+list <- split(x, x$Country.Region)
+
+list <- lapply(list, function(x) x %>% 
+                 mutate(roll_avg = rollmean(positive_diff, k = 7, fill = NA)))
+
+x <- do.call("rbind", list)
+
+x1 <- x %>% 
+  filter(!is.na(roll_avg))
 
 df <- read.csv("https://raw.githubusercontent.com/suranne-yujun-pan/covid_dashboard/master/data/countries_ts.csv",
                stringsAsFactors=FALSE)
@@ -23,6 +37,8 @@ spdata <- read.csv("https://raw.githubusercontent.com/suranne-yujun-pan/covid_da
 
 spdata$Date <- spdata$Date %>% as.character() %>% as.Date()
 
+max_date <- max(x$Date)
+
 # Define ui 
 ui <- fluidPage(
   titlePanel("Covid-19 Dashboard"),
@@ -30,9 +46,9 @@ ui <- fluidPage(
     sidebarPanel(
       selectInput("country", "Countries or Territories", sort(unique(x$Country.Region))),
       dateInput('start_date', 'Start Date', value = '2020-01-22',
-                min = '2020-01-22', max = '2020-12-12'),
-      dateInput('end_date', 'End Date', value = '2020-12-12',
-                min = '2020-01-22', max = '2020-12-12')
+                min = '2020-01-22', max = max_date),
+      dateInput('end_date', 'End Date', value = max_date,
+                min = '2020-01-22', max = max_date)
     ),
     mainPanel(
       tabsetPanel(
