@@ -5,9 +5,9 @@ account: suranne-yujun-pan
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3395994
-bundleId: 4065560
+bundleId: 4065609
 url: https://suranne-yujun-pan.shinyapps.io/Covid_dashboard/
-when: 1609959375.59527
+when: 1609960176.21353
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: data/.DS_Store|data/countries_ts_c.csv|data/countries_ts.csv|data/pop.csv|data/spdata.csv
